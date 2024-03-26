@@ -2,7 +2,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
-import javax.swing.Timer;;
+import javax.swing.Timer;
+
 
 public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     private class Tile {
@@ -70,14 +71,14 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         }
 
         g.setColor(Color.GREEN);
-        g.fillRect(snakeHead.x * tileSize, snakeHead.y * tileSize, tileSize, tileSize);
+        g.fillRoundRect(snakeHead.x * tileSize, snakeHead.y * tileSize, tileSize, tileSize,20,20);
 
         g.setColor(Color.RED);
-        g.fillRect(food.x * tileSize, food.y * tileSize, tileSize, tileSize);
+        g.fillOval(food.x * tileSize, food.y * tileSize, tileSize, tileSize);
 
         for (Tile bodyPart : snakeBody) {
-            g.setColor(Color.GREEN);
-            g.fillRect(bodyPart.x * tileSize, bodyPart.y * tileSize, tileSize, tileSize);
+            g.setColor(Color.green);
+            g.fill3DRect(bodyPart.x * tileSize, bodyPart.y * tileSize, tileSize, tileSize,true);
         }
 
     }
