@@ -21,6 +21,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 
     Tile snakeHead;
     Tile food;
+    ArrayList<Tile> snakeBody;
 
     Random random;
 
@@ -40,6 +41,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 
         snakeHead = new Tile(5, 5);
         food = new Tile(10, 10);
+        snakeBody = new ArrayList<Tile>();
 
         random = new Random();
         placeFood();
@@ -62,6 +64,11 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 
         g.setColor(Color.RED);
         g.fillRect(food.x * tileSize, food.y * tileSize, tileSize, tileSize);
+
+        for (Tile bodyPart : snakeBody) {
+            g.setColor(Color.GREEN);
+            g.fillRect(bodyPart.x * tileSize, bodyPart.y * tileSize, tileSize, tileSize);
+        }
     }
 
     public void placeFood() {
@@ -70,8 +77,29 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     }
 
     public void move() {
+        if (isCollided(snakeHead, food)) {
+            snakeBody.add(new Tile(food.x, food.y));
+            placeFood();
+        }
+
+        for (int i = snakeBody.size() - 1; i >= 0; i--) {
+            Tile bodyPart = snakeBody.get(i);
+            if (i == 0) {
+                bodyPart.x = snakeHead.x;
+                bodyPart.y = snakeHead.y;
+            } else {
+                Tile prevBodyPart = snakeBody.get(i - 1);
+                bodyPart.x = prevBodyPart.x;
+                bodyPart.y = prevBodyPart.y;
+            }
+        }
+
         snakeHead.x += velocityX;
         snakeHead.y += velocityY;
+    }
+
+    public boolean isCollided(Tile t1, Tile t2) {
+        return t1.x == t2.x && t1.y == t2.y;
     }
 
     @Override
@@ -82,16 +110,16 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_UP && velocityY!=1) {
+        if (e.getKeyCode() == KeyEvent.VK_UP && velocityY != 1) {
             velocityX = 0;
             velocityY = -1;
-        } else if (e.getKeyCode() == KeyEvent.VK_DOWN && velocityY!=-1) {
+        } else if (e.getKeyCode() == KeyEvent.VK_DOWN && velocityY != -1) {
             velocityX = 0;
             velocityY = 1;
-        } else if (e.getKeyCode() == KeyEvent.VK_LEFT && velocityX!=1) {
+        } else if (e.getKeyCode() == KeyEvent.VK_LEFT && velocityX != 1) {
             velocityX = -1;
             velocityY = 0;
-        } else if (e.getKeyCode() == KeyEvent.VK_RIGHT && velocityX!=-1) {
+        } else if (e.getKeyCode() == KeyEvent.VK_RIGHT && velocityX != -1) {
             velocityX = 1;
             velocityY = 0;
         }
