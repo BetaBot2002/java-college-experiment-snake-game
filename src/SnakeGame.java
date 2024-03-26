@@ -60,6 +60,15 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     }
 
     public void draw(Graphics g) {
+        g.setFont(new Font("Helvetica", Font.BOLD,18));
+        if(isGameOver){
+            g.setColor(Color.RED);
+            g.drawString("Game Over!! Score: "+String.valueOf(snakeBody.size()), tileSize-18, tileSize);
+        }else{
+            g.setColor(Color.GREEN);
+            g.drawString("Score: "+String.valueOf(snakeBody.size()), tileSize-18, tileSize);
+        }
+
         g.setColor(Color.GREEN);
         g.fillRect(snakeHead.x * tileSize, snakeHead.y * tileSize, tileSize, tileSize);
 
@@ -70,6 +79,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
             g.setColor(Color.GREEN);
             g.fillRect(bodyPart.x * tileSize, bodyPart.y * tileSize, tileSize, tileSize);
         }
+
     }
 
     public void placeFood() {
@@ -87,6 +97,16 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     }
 
     public void move() {
+        for (Tile bodyPart : snakeBody) {
+            if (isCollided(bodyPart, snakeHead)) {
+                isGameOver = true;
+            }
+        }
+
+        if (isCollidedWithWall()) {
+            isGameOver = true;
+        }
+
         if (isCollided(snakeHead, food)) {
             snakeBody.add(new Tile(food.x, food.y));
             placeFood();
@@ -107,15 +127,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         snakeHead.x += velocityX;
         snakeHead.y += velocityY;
 
-        for (Tile bodyPart : snakeBody) {
-            if (isCollided(bodyPart, snakeHead)) {
-                isGameOver = true;
-            }
-        }
 
-        if (isCollidedWithWall()) {
-            isGameOver = true;
-        }
     }
 
     @Override
