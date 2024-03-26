@@ -11,7 +11,7 @@ public class App {
         frame.setVisible(true);
         frame.setSize(boardWidth,boardHeight);
         frame.setLocationRelativeTo(null);
-        frame.setResizable(true);
+        frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setBackground(Color.RED);
 
