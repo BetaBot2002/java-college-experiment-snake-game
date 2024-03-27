@@ -92,21 +92,19 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     }
 
     public boolean isCollidedWithWall() {
-        return snakeHead.x * tileSize < 0 || snakeHead.x * tileSize > boardWidth ||
-                snakeHead.y * tileSize < 0 || snakeHead.y * tileSize > boardHeight;
+        return snakeHead.x * tileSize < 0 || snakeHead.x * tileSize >= boardWidth ||
+                snakeHead.y * tileSize < 0 || snakeHead.y * tileSize >= boardHeight;
     }
 
     public void move() {
         for (Tile bodyPart : snakeBody) {
             if (isCollided(bodyPart, snakeHead)) {
                 isGameOver = true;
-                removeKeyListener(this);
             }
         }
 
         if (isCollidedWithWall()) {
             isGameOver = true;
-            removeKeyListener(this);
         }
 
         if (isCollided(snakeHead, food)) {
@@ -144,19 +142,19 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         if (e.getKeyCode() == KeyEvent.VK_UP && velocityY != 1) {
             velocityX = 0;
             velocityY = -1;
-            System.out.println(e.getKeyCode());
+            // System.out.println(e.getKeyCode());
         } else if (e.getKeyCode() == KeyEvent.VK_DOWN && velocityY != -1) {
             velocityX = 0;
             velocityY = 1;
-            System.out.println(e.getKeyCode());
+            // System.out.println(e.getKeyCode());
         } else if (e.getKeyCode() == KeyEvent.VK_LEFT && velocityX != 1) {
             velocityX = -1;
             velocityY = 0;
-            System.out.println(e.getKeyCode());
+            // System.out.println(e.getKeyCode());
         } else if (e.getKeyCode() == KeyEvent.VK_RIGHT && velocityX != -1) {
             velocityX = 1;
             velocityY = 0;
-            System.out.println(e.getKeyCode());
+            // System.out.println(e.getKeyCode());
         }
     }
 
