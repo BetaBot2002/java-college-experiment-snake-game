@@ -1,6 +1,10 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.Timer;
 
@@ -9,11 +13,25 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         int x;
         int y;
         Color color;
+        Image image;
 
-        Tile(int x, int y,Color color) {
+        Tile(int x, int y, Color color) {
             this.x = x;
             this.y = y;
-            this.color=color;
+            this.color = color;
+            this.image = null;
+        }
+
+        Tile(int x, int y, String imagePath) {
+            this.x = x;
+            this.y = y;
+            this.color = null;
+            try {
+                this.image = ImageIO.read(new File(imagePath)); 
+            } catch (IOException e) {
+                e.printStackTrace();
+                this.image=null;
+            }
         }
     }
 
@@ -42,8 +60,8 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         addKeyListener(this);
         setFocusable(true);
 
-        snakeHead = new Tile(5, 5,Color.GREEN);
-        food = new Tile(10, 10,Color.RED);
+        snakeHead = new Tile(5, 5, Color.GREEN);
+        food = new Tile(10, 10, "Images/Apple.png");
         snakeBody = new ArrayList<Tile>();
 
         random = new Random();
@@ -74,8 +92,9 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         g.setColor(snakeHead.color);
         g.fillRoundRect(snakeHead.x * tileSize, snakeHead.y * tileSize, tileSize, tileSize, 20, 20);
 
-        g.setColor(food.color);
-        g.fillOval(food.x * tileSize, food.y * tileSize, tileSize, tileSize);
+        if (food.image != null) {
+            g.drawImage(food.image, food.x * tileSize, food.y * tileSize, tileSize, tileSize, null);
+        }
 
         for (Tile bodyPart : snakeBody) {
             g.setColor(bodyPart.color);
@@ -110,7 +129,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         }
 
         if (isCollided(snakeHead, food)) {
-            snakeBody.add(new Tile(food.x, food.y,ColorPicker.getNextColor()));
+            snakeBody.add(new Tile(food.x, food.y, ColorPicker.getNextColor()));
             placeFood();
         }
 
