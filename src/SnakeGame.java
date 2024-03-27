@@ -8,10 +8,12 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     private class Tile {
         int x;
         int y;
+        Color color;
 
-        Tile(int x, int y) {
+        Tile(int x, int y,Color color) {
             this.x = x;
             this.y = y;
+            this.color=color;
         }
     }
 
@@ -40,8 +42,8 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         addKeyListener(this);
         setFocusable(true);
 
-        snakeHead = new Tile(5, 5);
-        food = new Tile(10, 10);
+        snakeHead = new Tile(5, 5,Color.GREEN);
+        food = new Tile(10, 10,Color.RED);
         snakeBody = new ArrayList<Tile>();
 
         random = new Random();
@@ -69,14 +71,14 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
             g.drawString("Score: " + String.valueOf(snakeBody.size()), tileSize - 18, tileSize);
         }
 
-        g.setColor(Color.GREEN);
+        g.setColor(snakeHead.color);
         g.fillRoundRect(snakeHead.x * tileSize, snakeHead.y * tileSize, tileSize, tileSize, 20, 20);
 
-        g.setColor(Color.RED);
+        g.setColor(food.color);
         g.fillOval(food.x * tileSize, food.y * tileSize, tileSize, tileSize);
 
         for (Tile bodyPart : snakeBody) {
-            g.setColor(Color.green);
+            g.setColor(bodyPart.color);
             g.fill3DRect(bodyPart.x * tileSize, bodyPart.y * tileSize, tileSize, tileSize, true);
         }
 
@@ -108,7 +110,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         }
 
         if (isCollided(snakeHead, food)) {
-            snakeBody.add(new Tile(food.x, food.y));
+            snakeBody.add(new Tile(food.x, food.y,ColorPicker.getNextColor()));
             placeFood();
         }
 
