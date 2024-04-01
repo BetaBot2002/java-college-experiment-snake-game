@@ -40,6 +40,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     int tileSize = 25;
 
     Tile wallTile;
+    Tile grassTile;
 
     Tile snakeHead;
     Tile food;
@@ -63,6 +64,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         setFocusable(true);
 
         wallTile=new Tile(0, 0, "Images/WallTile.png");
+        grassTile=new Tile(1, 1, "Images/GrassTile.png");
         snakeHead = new Tile(5, 5, "Images/SnakeHead.png");
         food = new Tile(10, 10, "Images/Apple.png");
         snakeBody = new ArrayList<Tile>();
@@ -87,6 +89,13 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         if (isGameOver) {
             g.setColor(Color.RED);
             g.drawString("Game Over!! Score: " + String.valueOf(snakeBody.size()), tileSize - 18, tileSize);
+        }
+
+        g.setColor(Color.BLUE);
+        for (int x = 1; x < boardWidth / tileSize - 1; x++) {
+            for (int y = 1; y < boardHeight / tileSize - 1; y++) {
+                g.drawImage(grassTile.image, x * tileSize, y * tileSize, tileSize, tileSize, null);
+            }
         }
 
         // g.setColor(snakeHead.color);
