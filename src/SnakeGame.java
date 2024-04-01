@@ -108,15 +108,13 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         // Draw grey tiles on top and bottom borders
         for (int i = 0; i < boardWidth / tileSize; i++) {
             g.fill3DRect(i * tileSize, 0, tileSize, tileSize,true); // Top border
-            g.fill3DRect(i * tileSize, (boardHeight / tileSize - 1) * tileSize, tileSize, tileSize,true); // Bottom
-                                                                                                                // border
+            g.fill3DRect(i * tileSize, (boardHeight / tileSize - 1) * tileSize, tileSize, tileSize,true); // Bottom border
         }
 
         // Draw grey tiles on left and right borders (excluding corners)
         for (int i = 1; i < boardHeight / tileSize - 1; i++) {
             g.fill3DRect(0, i * tileSize, tileSize, tileSize,true); // Left border
-            g.fill3DRect((boardWidth / tileSize - 1) * tileSize, i * tileSize, tileSize, tileSize,true); // Right
-                                                                                                               // border
+            g.fill3DRect((boardWidth / tileSize - 1) * tileSize, i * tileSize, tileSize, tileSize,true); // Right border
         }
     }
 
