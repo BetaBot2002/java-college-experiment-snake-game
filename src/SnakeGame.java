@@ -63,7 +63,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         setFocusable(true);
 
         wallTile=new Tile(0, 0, "Images/WallTile.png");
-        snakeHead = new Tile(5, 5, Color.GREEN);
+        snakeHead = new Tile(5, 5, "Images/SnakeHead.png");
         food = new Tile(10, 10, "Images/Apple.png");
         snakeBody = new ArrayList<Tile>();
 
@@ -89,16 +89,18 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
             g.drawString("Game Over!! Score: " + String.valueOf(snakeBody.size()), tileSize - 18, tileSize);
         }
 
-        g.setColor(snakeHead.color);
-        g.fillRoundRect(snakeHead.x * tileSize, snakeHead.y * tileSize, tileSize, tileSize, 20, 20);
+        // g.setColor(snakeHead.color);
+        // g.fillRoundRect(snakeHead.x * tileSize, snakeHead.y * tileSize, tileSize, tileSize, 20, 20);
+        g.drawImage(snakeHead.image, snakeHead.x * tileSize, snakeHead.y * tileSize, tileSize, tileSize, null);
 
         if (food.image != null) {
             g.drawImage(food.image, food.x * tileSize, food.y * tileSize, tileSize, tileSize, null);
         }
 
         for (Tile bodyPart : snakeBody) {
-            g.setColor(bodyPart.color);
-            g.fill3DRect(bodyPart.x * tileSize, bodyPart.y * tileSize, tileSize, tileSize, true);
+            // g.setColor(bodyPart.color);
+            // g.fill3DRect(bodyPart.x * tileSize, bodyPart.y * tileSize, tileSize, tileSize, true);
+            g.drawImage(bodyPart.image, bodyPart.x * tileSize, bodyPart.y * tileSize, tileSize, tileSize, null);
         }
 
         drawWall(g);
@@ -155,7 +157,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         }
 
         if (isCollided(snakeHead, food)) {
-            snakeBody.add(new Tile(food.x, food.y, ColorPicker.getNextColor()));
+            snakeBody.add(new Tile(food.x, food.y, "Images/SnakeBody.png"));
             placeFood();
         }
 
