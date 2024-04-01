@@ -27,10 +27,10 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
             this.y = y;
             this.color = null;
             try {
-                this.image = ImageIO.read(new File(imagePath)); 
+                this.image = ImageIO.read(new File(imagePath));
             } catch (IOException e) {
                 e.printStackTrace();
-                this.image=null;
+                this.image = null;
             }
         }
     }
@@ -85,7 +85,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
             g.setColor(Color.RED);
             g.drawString("Game Over!! Score: " + String.valueOf(snakeBody.size()), tileSize - 18, tileSize);
         }
-        
+
         g.setColor(snakeHead.color);
         g.fillRoundRect(snakeHead.x * tileSize, snakeHead.y * tileSize, tileSize, tileSize, 20, 20);
 
@@ -98,15 +98,35 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
             g.fill3DRect(bodyPart.x * tileSize, bodyPart.y * tileSize, tileSize, tileSize, true);
         }
 
+        drawWall(g);
+
     }
 
-    public int getScore(){
+    public void drawWall(Graphics g){
+        g.setColor(Color.GRAY); // Set color to grey
+
+        // Draw grey tiles on top and bottom borders
+        for (int i = 0; i < boardWidth / tileSize; i++) {
+            g.fill3DRect(i * tileSize, 0, tileSize, tileSize,true); // Top border
+            g.fill3DRect(i * tileSize, (boardHeight / tileSize - 1) * tileSize, tileSize, tileSize,true); // Bottom
+                                                                                                                // border
+        }
+
+        // Draw grey tiles on left and right borders (excluding corners)
+        for (int i = 1; i < boardHeight / tileSize - 1; i++) {
+            g.fill3DRect(0, i * tileSize, tileSize, tileSize,true); // Left border
+            g.fill3DRect((boardWidth / tileSize - 1) * tileSize, i * tileSize, tileSize, tileSize,true); // Right
+                                                                                                               // border
+        }
+    }
+
+    public int getScore() {
         return snakeBody.size();
     }
 
     public void placeFood() {
-        food.x = random.nextInt(boardWidth / tileSize);
-        food.y = random.nextInt(boardHeight / tileSize);
+        food.x = random.nextInt((boardWidth / tileSize) - 2) + 1;
+        food.y = random.nextInt((boardHeight / tileSize) - 2) + 1;
     }
 
     public boolean isCollided(Tile t1, Tile t2) {
@@ -114,8 +134,8 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     }
 
     public boolean isCollidedWithWall() {
-        return snakeHead.x * tileSize < 0 || snakeHead.x * tileSize >= boardWidth ||
-                snakeHead.y * tileSize < 0 || snakeHead.y * tileSize >= boardHeight;
+        return snakeHead.x * tileSize < 1 || snakeHead.x * tileSize >= boardWidth - (1 * tileSize) ||
+                snakeHead.y * tileSize < 1 || snakeHead.y * tileSize >= boardHeight - (1 * tileSize);
     }
 
     public void move() {
