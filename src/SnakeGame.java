@@ -39,6 +39,8 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     int boardHeight;
     int tileSize = 25;
 
+    Tile wallTile;
+
     Tile snakeHead;
     Tile food;
     ArrayList<Tile> snakeBody;
@@ -60,6 +62,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         addKeyListener(this);
         setFocusable(true);
 
+        wallTile=new Tile(0, 0, "Images/WallTile.png");
         snakeHead = new Tile(5, 5, Color.GREEN);
         food = new Tile(10, 10, "Images/Apple.png");
         snakeBody = new ArrayList<Tile>();
@@ -103,18 +106,22 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     }
 
     public void drawWall(Graphics g){
-        g.setColor(Color.GRAY); // Set color to grey
+        // g.setColor(Color.GRAY); // Set color to grey
 
-        // Draw grey tiles on top and bottom borders
+        // Draw tiles on top and bottom borders
         for (int i = 0; i < boardWidth / tileSize; i++) {
-            g.fill3DRect(i * tileSize, 0, tileSize, tileSize,true); // Top border
-            g.fill3DRect(i * tileSize, (boardHeight / tileSize - 1) * tileSize, tileSize, tileSize,true); // Bottom border
+            // g.fill3DRect(i * tileSize, 0, tileSize, tileSize,true); // Top border
+            // g.fill3DRect(i * tileSize, (boardHeight / tileSize - 1) * tileSize, tileSize, tileSize,true); // Bottom border
+            g.drawImage(wallTile.image, i * tileSize, 0, tileSize, tileSize, null);
+            g.drawImage(wallTile.image, i * tileSize, (boardHeight / tileSize - 1) * tileSize, tileSize, tileSize, null);
         }
 
-        // Draw grey tiles on left and right borders (excluding corners)
+        // Draw tiles on left and right borders (excluding corners)
         for (int i = 1; i < boardHeight / tileSize - 1; i++) {
-            g.fill3DRect(0, i * tileSize, tileSize, tileSize,true); // Left border
-            g.fill3DRect((boardWidth / tileSize - 1) * tileSize, i * tileSize, tileSize, tileSize,true); // Right border
+            // g.fill3DRect(0, i * tileSize, tileSize, tileSize,true); // Left border
+            // g.fill3DRect((boardWidth / tileSize - 1) * tileSize, i * tileSize, tileSize, tileSize,true); // Right border
+            g.drawImage(wallTile.image, 0, i * tileSize, tileSize, tileSize, null);
+            g.drawImage(wallTile.image, (boardWidth / tileSize - 1) * tileSize, i * tileSize, tileSize, tileSize, null);
         }
     }
 
