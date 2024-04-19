@@ -12,20 +12,20 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     private class Tile {
         int x;
         int y;
-        Color color;
+        // Color color;
         Image image;
 
-        Tile(int x, int y, Color color) {
-            this.x = x;
-            this.y = y;
-            this.color = color;
-            this.image = null;
-        }
+        // Tile(int x, int y, Color color) {
+        //     this.x = x;
+        //     this.y = y;
+        //     this.color = color;
+        //     this.image = null;
+        // }
 
         Tile(int x, int y, String imagePath) {
             this.x = x;
             this.y = y;
-            this.color = null;
+            // this.color = null;
             try {
                 this.image = ImageIO.read(new File(imagePath));
             } catch (IOException e) {

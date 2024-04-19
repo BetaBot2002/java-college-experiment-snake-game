@@ -17,7 +17,7 @@ public class ScorePanel extends JPanel implements ActionListener{
     ScorePanel(SnakeGame snakeGame, int panelWidth, int panelHeight) {
         this.snakeGame=snakeGame;
         this.currentScore = 0;
-        this.highestScore = 40;
+        this.highestScore = FileHelper.getHighScoreFromFile("HighScore.txt");
 
         setPreferredSize(new Dimension(panelWidth, panelHeight));
         setBackground(Color.WHITE);
@@ -43,6 +43,7 @@ public class ScorePanel extends JPanel implements ActionListener{
         currentScore = snakeGame.getScore();
         if (currentScore > highestScore) {
             highestScore = currentScore;
+            FileHelper.writeLineToFile("HighScore.txt", currentScore);
         }
     }
 
