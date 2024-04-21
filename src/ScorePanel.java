@@ -31,7 +31,6 @@ public class ScorePanel extends JPanel implements ActionListener{
         draw(g);
     }
 
-
     public void draw(Graphics g) {
         g.setColor(Color.BLACK);
         g.setFont(new Font("Arial", Font.BOLD, 15));
