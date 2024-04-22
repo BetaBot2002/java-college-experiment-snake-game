@@ -12,15 +12,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     private class Tile {
         int x;
         int y;
-        // Color color;
         Image image;
-
-        // Tile(int x, int y, Color color) {
-        // this.x = x;
-        // this.y = y;
-        // this.color = color;
-        // this.image = null;
-        // }
 
         Tile(int x, int y, String imagePath) {
             this.x = x;
@@ -98,9 +90,6 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
             }
         }
 
-        // g.setColor(snakeHead.color);
-        // g.fillRoundRect(snakeHead.x * tileSize, snakeHead.y * tileSize, tileSize,
-        // tileSize, 20, 20);
         g.drawImage(snakeHead.image, snakeHead.x * tileSize, snakeHead.y * tileSize, tileSize, tileSize, null);
 
         if (food.image != null) {
@@ -108,9 +97,6 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         }
 
         for (Tile bodyPart : snakeBody) {
-            // g.setColor(bodyPart.color);
-            // g.fill3DRect(bodyPart.x * tileSize, bodyPart.y * tileSize, tileSize,
-            // tileSize, true);
             g.drawImage(bodyPart.image, bodyPart.x * tileSize, bodyPart.y * tileSize, tileSize, tileSize, null);
         }
 
@@ -119,23 +105,13 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     }
 
     public void drawWall(Graphics g) {
-        // g.setColor(Color.GRAY); // Set color to grey
 
-        // Draw tiles on top and bottom borders
         for (int i = 0; i < boardWidth / tileSize; i++) {
-            // g.fill3DRect(i * tileSize, 0, tileSize, tileSize,true); // Top border
-            // g.fill3DRect(i * tileSize, (boardHeight / tileSize - 1) * tileSize, tileSize,
-            // tileSize,true); // Bottom border
             g.drawImage(wallTile.image, i * tileSize, 0, tileSize, tileSize, null);
-            g.drawImage(wallTile.image, i * tileSize, (boardHeight / tileSize - 1) * tileSize, tileSize, tileSize,
-                    null);
+            g.drawImage(wallTile.image, i * tileSize, (boardHeight / tileSize - 1) * tileSize, tileSize, tileSize,null);
         }
 
-        // Draw tiles on left and right borders (excluding corners)
         for (int i = 1; i < boardHeight / tileSize - 1; i++) {
-            // g.fill3DRect(0, i * tileSize, tileSize, tileSize,true); // Left border
-            // g.fill3DRect((boardWidth / tileSize - 1) * tileSize, i * tileSize, tileSize,
-            // tileSize,true); // Right border
             g.drawImage(wallTile.image, 0, i * tileSize, tileSize, tileSize, null);
             g.drawImage(wallTile.image, (boardWidth / tileSize - 1) * tileSize, i * tileSize, tileSize, tileSize, null);
         }
@@ -208,23 +184,17 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     private void showGameOverDialog() {
         int currentScore = snakeBody.size();
         int highScore = FileHelper.getHighScoreFromFile("HighScore.txt");
-
         String message = "Game Over!\nScore: " + currentScore + "\nHigh Score: " + highScore + "\nPress Space to Restart";
 
-        // Create a custom JOptionPane with the message and custom button text
         JOptionPane optionPane = new JOptionPane(message, JOptionPane.PLAIN_MESSAGE, JOptionPane.DEFAULT_OPTION, null,
                 new Object[] { "Restart" }, "Restart");
 
-        // Create a JDialog and set its properties
         JDialog dialog = optionPane.createDialog("Game Over");
-        dialog.setSize(400, 200); // Set the size of the dialog
-        dialog.setResizable(false); // Optionally, make the dialog non-resizable
-        dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE); // Close the dialog when the user clicks the // close button
-
-        // Show the dialog
+        dialog.setSize(400, 200);
+        dialog.setResizable(false);
+        dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         dialog.setVisible(true);
-
-        // Handle the user's choice
+        
         Object selectedValue = optionPane.getValue();
         if (selectedValue!=null && selectedValue.equals("Restart")) {
             restart();
@@ -247,19 +217,15 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         if (!isGameOver && e.getKeyCode() == KeyEvent.VK_UP && velocityY != 1) {
             velocityX = 0;
             velocityY = -1;
-            // System.out.println(e.getKeyCode());
         } else if (!isGameOver && e.getKeyCode() == KeyEvent.VK_DOWN && velocityY != -1) {
             velocityX = 0;
             velocityY = 1;
-            // System.out.println(e.getKeyCode());
         } else if (!isGameOver && e.getKeyCode() == KeyEvent.VK_LEFT && velocityX != 1) {
             velocityX = -1;
             velocityY = 0;
-            // System.out.println(e.getKeyCode());
         } else if (!isGameOver && e.getKeyCode() == KeyEvent.VK_RIGHT && velocityX != -1) {
             velocityX = 1;
             velocityY = 0;
-            // System.out.println(e.getKeyCode());
         } else if (isGameOver && (e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_ENTER)) {
             restart();
         }
