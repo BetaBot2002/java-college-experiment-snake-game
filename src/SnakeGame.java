@@ -77,13 +77,6 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     }
 
     public void draw(Graphics g) {
-        g.setFont(new Font("Helvetica", Font.BOLD, 18));
-        if (isGameOver) {
-            g.setColor(Color.RED);
-            g.drawString("Game Over!! Score: " + String.valueOf(snakeBody.size()), tileSize - 18, tileSize);
-        }
-
-        g.setColor(Color.BLUE);
         for (int x = 1; x < boardWidth / tileSize - 1; x++) {
             for (int y = 1; y < boardHeight / tileSize - 1; y++) {
                 g.drawImage(grassTile.image, x * tileSize, y * tileSize, tileSize, tileSize, null);
@@ -101,11 +94,9 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         }
 
         drawWall(g);
-
     }
 
     public void drawWall(Graphics g) {
-
         for (int i = 0; i < boardWidth / tileSize; i++) {
             g.drawImage(wallTile.image, i * tileSize, 0, tileSize, tileSize, null);
             g.drawImage(wallTile.image, i * tileSize, (boardHeight / tileSize - 1) * tileSize, tileSize, tileSize,null);
